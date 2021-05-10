@@ -1,24 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import { MainMenu } from './pages/mainMenu';
+import { StartPage } from './pages/startPage';
+import {createStore} from 'redux';
+import { Provider } from 'react-redux'
+import positionReduser from './redusers/position.reduser.js'
+
+const store = createStore(positionReduser);
+
+store.dispatch({
+  type:"NEW_POSITION",
+  pos: {
+    x: 0,
+    y: 0,
+  }
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <StartPage />
+      </div>
+    </Provider>
   );
 }
 

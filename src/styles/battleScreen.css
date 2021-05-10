@@ -1,0 +1,13 @@
+.empty-tile {
+  background: gray;
+  height: 50px;
+  width: 50px;
+}
+
+.empty-tile:hover {
+  background: blue;
+}
+
+.empty-tile:active {
+  background: rebeccapurple;
+}
