@@ -3,9 +3,9 @@ import { MainMenu } from './pages/mainMenu';
 import { StartPage } from './pages/startPage';
 import {createStore} from 'redux';
 import { Provider } from 'react-redux'
-import positionReduser from './redusers/position.reduser.js'
+import {actionReduser} from './redusers/position.reduser.js'
 
-const store = createStore(positionReduser);
+const store = createStore(actionReduser);
 
 store.dispatch({
   type:"NEW_POSITION",
