@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import  GameTable  from '../elements/gameTable';
 import { connect } from 'react-redux'
-const logic = require('../actions/logic')
+const logic = require('../actions/actions.js')
 
 const BattleScene = (props) => {
   const dimention = {
@@ -18,7 +18,7 @@ const BattleScene = (props) => {
   return(
     <div>
       <div>
-        {props.gameStatus.turnIs}
+        {props.gameStatus.whoTurn}
       </div>
       <button onClick={endTurnButtonHandler}>End turn</button>
       <GameTable dimention={dimention}/>

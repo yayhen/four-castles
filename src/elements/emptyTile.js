@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-const logic = require('../actions/logic.js')
+const action = require('../actions/actions.js')
 
 const EmptyTile = (props) => {
 
@@ -49,7 +49,7 @@ const EmptyTile = (props) => {
 }
 
 const mapDispatchToProps = {
-    newPosition: logic.newPosition,
+    newPosition: action.newPosition,
 }
 
 const mapStateToProps = (state) => {

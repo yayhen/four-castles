@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import {connect} from 'react-redux'
-import { newGame } from '../actions/logic';
+import { newGame } from '../actions/actions';
 
 const MainMenu = (props) => {
 
