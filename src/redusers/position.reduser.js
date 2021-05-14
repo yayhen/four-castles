@@ -1,7 +1,7 @@
 import MapCreator from '../logic/mapCreator.js';
 import {createUnit} from '../logic/units';
 import {nothingSelected, clickOnSelectedTile, lackOfUnitInSelectedTile, turnOfPlayer, unitHaveActionPoints, inClickedTileExistUnit, attackedUnitInRange, unitCanTurnInSelectTile} from '../logic/clickCheck'
-import {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn} from '../logic/gameActions.js'
+import {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit} from '../logic/gameActions.js'
 
 const initGameMap = (dimention) => {
   let gameMap = new MapCreator(dimention, ['Player1', 'Player2']);
@@ -18,6 +18,10 @@ const initGameMap = (dimention) => {
     playerNames: gameMap.players,
     whoTurn: 0,
     mapArray: gameMap.battleGround,
+    playersGold: [10, 10],
+    castlePositions: [
+      {x: 0, y: 9}, {x: 9, y: 0}
+    ]
   };
 
   return gameState
@@ -53,6 +57,8 @@ export const actionReduser = (state = initGameMap({x: 10, y: 10}), action) => {
       return initGameMap({x: 10, y: 10});
     case "END_TURN":
       return endTurn(state);
+    case "ADD_UNIT":
+      return buyUnit(state, action.unit);
     default:
       return state;
   }

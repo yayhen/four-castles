@@ -18,4 +18,11 @@ const endingTurn = () => {
   }
 }
 
-module.exports = {newPosition, newGame, endingTurn}
+const addUnit = (unit) => {
+  return {
+    type: "ADD_UNIT",
+    unit
+  }
+}
+
+module.exports = {newPosition, newGame, endingTurn, addUnit}
