@@ -56,4 +56,11 @@ const unitCanTurnInSelectTile = (state, action) => {
   return false;
 }
 
-export {nothingSelected, clickOnSelectedTile, lackOfUnitInSelectedTile, turnOfPlayer, unitHaveActionPoints, inClickedTileExistUnit, attackedUnitInRange, unitCanTurnInSelectTile}
+const clickOnCastle = (state, action) => {
+  if(state.mapArray[action.pos.x][action.pos.y].update === 'castle') {
+    return true
+  }
+  return false;
+}
+
+export {nothingSelected, clickOnSelectedTile, lackOfUnitInSelectedTile, turnOfPlayer, unitHaveActionPoints, inClickedTileExistUnit, attackedUnitInRange, unitCanTurnInSelectTile, clickOnCastle}

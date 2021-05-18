@@ -2,7 +2,7 @@ import { clickOnSelectedTile } from "./clickCheck";
 import { createUnit } from "./units";
 
 const selectTile = (state, action) => {
-  return {...state, selectedTileX: action.pos.x, selectedTileY: action.pos.y};
+  return {...state, selectedTileX: action.pos.x, selectedTileY: action.pos.y,};
 }
 
 const unselectTile = (state) => {
@@ -39,13 +39,18 @@ const endTurn = (state) => {
   return {...state, whoTurn: t};
 }
 
-const buyUnit = (state, unit) => {
+const buyUnit = (state, unit, action) => {
   if (createUnit(unit.unitName, unit.holder).cost <= state.playersGold[unit.holder]) {
     const newUnit = createUnit(unit.unitName, unit.holder);
     state.playersGold[unit.holder] -= newUnit.cost;
-    state.mapArray[state.castlePositions[state.whoTurn].x][state.castlePositions[state.whoTurn].y].unit = newUnit;
+    state.mapArray[action.pos.x][action.pos.y].unit = newUnit;
   }
+  delete state.unitInCastle;
   return {...state};
 }
 
-export {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit}
+const selectCastle = (state, action) => {
+  return {...state, showCastle: true, selectedTileX: action.pos.x, selectedTileY: action.pos.y}
+}
+
+export {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit, selectCastle}

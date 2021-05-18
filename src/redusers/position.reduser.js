@@ -1,7 +1,7 @@
 import MapCreator from '../logic/mapCreator.js';
 import {createUnit} from '../logic/units';
-import {nothingSelected, clickOnSelectedTile, lackOfUnitInSelectedTile, turnOfPlayer, unitHaveActionPoints, inClickedTileExistUnit, attackedUnitInRange, unitCanTurnInSelectTile} from '../logic/clickCheck'
-import {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit} from '../logic/gameActions.js'
+import {nothingSelected, clickOnSelectedTile, lackOfUnitInSelectedTile, turnOfPlayer, unitHaveActionPoints, inClickedTileExistUnit, attackedUnitInRange, unitCanTurnInSelectTile, clickOnCastle} from '../logic/clickCheck'
+import {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit, selectCastle} from '../logic/gameActions.js'
 
 const initGameMap = (dimention) => {
   let gameMap = new MapCreator(dimention, ['Player1', 'Player2']);
@@ -21,7 +21,8 @@ const initGameMap = (dimention) => {
     playersGold: [10, 10],
     castlePositions: [
       {x: 0, y: 9}, {x: 9, y: 0}
-    ]
+    ],
+    showCastle: false,
   };
 
   return gameState
@@ -30,17 +31,24 @@ const initGameMap = (dimention) => {
 export const actionReduser = (state = initGameMap({x: 10, y: 10}), action) => {
   switch (action.type) {
     case "NEW_POSITION":
-      if(nothingSelected(state)) { // если ничего не выделено
+      state.showCastle = false;
+      if(clickOnCastle(state, action)) {
+        return selectCastle(state, action);
+      } 
+      if(nothingSelected(state)) {
         return selectTile(state, action);
       }
-      if(clickOnSelectedTile(state, action)) { // если кликнули на выделеннкю клетку
+      if(clickOnSelectedTile(state, action)) {
         return unselectTile(state);
       }
-      if(lackOfUnitInSelectedTile(state)) { // если нет юнита
+      if(lackOfUnitInSelectedTile(state)) {
+        if(state.unitInCastle) {
+          return buyUnit(state, state.unitInCastle, action);
+        }
         return selectTile(state, action);
       } else {
-        if(turnOfPlayer(state) && unitHaveActionPoints(state)) { // если ход игрока - владельца юнита и у юнита есть очки действия
-          if(inClickedTileExistUnit(state, action)) { // если на выбранной ячейке есть атакуемый юнит
+        if(turnOfPlayer(state) && unitHaveActionPoints(state)) {
+          if(inClickedTileExistUnit(state, action)) {
             if (attackedUnitInRange(state, action)) {
               return attackOnUnit(state, action);
             }
@@ -58,7 +66,8 @@ export const actionReduser = (state = initGameMap({x: 10, y: 10}), action) => {
     case "END_TURN":
       return endTurn(state);
     case "ADD_UNIT":
-      return buyUnit(state, action.unit);
+      state.unitInCastle = action.unit;
+      return {...state};
     default:
       return state;
   }
