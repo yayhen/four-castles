@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { Warrior } from './units/warrior.js';
 const action = require('../actions/actions.js')
 
 const EmptyTile = (props) => {
@@ -15,12 +16,15 @@ const EmptyTile = (props) => {
 
     if(!!tile.unit) {
       mes = tile.unit.unitName.slice(0, 3) +'\n' +tile.unit.hitPoints;
+      
       if(tile.unit.holder === 0) {
         selectedStyle.color = 'red';
       }
       if(tile.unit.holder === 1) {
         selectedStyle.color = 'blue';
       }
+
+      
     }
 
     if(tile.update == 'castle') {
@@ -35,6 +39,16 @@ const EmptyTile = (props) => {
 
     if(props.gameStatus.selectedTileX === props.tileX && props.gameStatus.selectedTileY === props.tileY) {
       selectedStyle.border= '3px solid red';
+    }
+
+    if (!!tile.unit && tile.unit.unitName == 'warrior') {
+      return (
+        <td>
+          <div style={selectedStyle}>
+            <Warrior newPosHandler={newPosHandler} />
+          </div>
+        </td>
+      )
     }
   }
   
