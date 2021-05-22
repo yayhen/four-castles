@@ -1,10 +1,10 @@
 import React from 'react';
-import {hitBar} from '../../logic/hitBar'
+import { hitBar } from '../../logic/hitBar';
 
-export const Warrior = (props) => {
+export const Archer = (props) => {
 
   return (
-    <div style={{background: 'url(./units/warrior.svg)', height: '45px', width: '45px'}}
+    <div style={{background: 'url(./units/archer.svg)', height: '45px', width: '45px'}}
         onClick= {props.newPosHandler}>
       <div style={hitBar(props.hitPoints, props.holder)}>
 

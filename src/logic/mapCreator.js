@@ -21,6 +21,7 @@ export default class MapCreator {
   addCastle(position = {x: 0, y: 0}, holder = 0) {
     this.battleGround[position.x][position.y].update = 'castle';
     this.battleGround[position.x][position.y].holder = holder;
+    this.battleGround[position.x][position.y].hitPoints = 100;
   }
 
   addUnit(position, unit) {
