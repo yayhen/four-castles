@@ -19,9 +19,43 @@
 .castle-info {
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: 100px;
 }
 
 .castle-info button {
   display: block;
+}
+
+.turn-info__player-1_active {
+  background: red;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.turn-info__player-1 {
+  border: 5px solid red;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.turn-info__player-2_active {
+  background: blue;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.turn-info__player-2 {
+  border: 5px solid blue;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 15px;
 }

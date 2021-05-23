@@ -52,6 +52,7 @@ const EmptyTile = (props) => {
     }
 
     if (!!tile.unit) {
+      selectedStyle.background = 'gray';
       switch (tile.unit.unitName) {
         case 'warrior':
           return (
