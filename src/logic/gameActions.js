@@ -29,6 +29,8 @@ const moveUnit = (state, action) => {
 const endTurn = (state) => {
   let t = state.whoTurn == 0 ? 1 : 0;
   state.playersGold[state.whoTurn] += 10;
+  state.selectedTileX = -1;
+  state.selectedTileY = -1;
   state.mapArray.forEach((item, index) => {
     item.forEach((itm, ind) => {
       if (typeof itm.unit !== 'undefined') {
@@ -53,4 +55,9 @@ const selectCastle = (state, action) => {
   return {...state, showCastle: true, selectedTileX: action.pos.x, selectedTileY: action.pos.y}
 }
 
-export {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit, selectCastle}
+const attackOnCastle = (state, action) => {
+  state.mapArray[action.pos.x][action.pos.y].hitPoints -= 30;
+  return {...state};
+}
+
+export {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit, selectCastle, attackOnCastle}

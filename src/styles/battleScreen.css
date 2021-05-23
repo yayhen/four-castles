@@ -11,3 +11,17 @@
 .empty-tile:active {
   background: rebeccapurple;
 }
+
+.game-table {
+  margin: 0 auto;
+}
+
+.castle-info {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+.castle-info button {
+  display: block;
+}

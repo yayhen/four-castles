@@ -1,7 +1,7 @@
 import MapCreator from '../logic/mapCreator.js';
 import {createUnit} from '../logic/units';
 import {nothingSelected, clickOnSelectedTile, lackOfUnitInSelectedTile, turnOfPlayer, unitHaveActionPoints, inClickedTileExistUnit, attackedUnitInRange, unitCanTurnInSelectTile, clickOnCastle} from '../logic/clickCheck'
-import {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit, selectCastle} from '../logic/gameActions.js'
+import {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit, selectCastle, attackOnCastle} from '../logic/gameActions.js'
 
 const initGameMap = (dimention) => {
   let gameMap = new MapCreator(dimention, ['Player1', 'Player2']);
@@ -32,7 +32,7 @@ export const actionReduser = (state = initGameMap({x: 10, y: 10}), action) => {
   switch (action.type) {
     case "NEW_POSITION":
       state.showCastle = false;
-      if(clickOnCastle(state, action)) {
+      if(clickOnCastle(state, action) && nothingSelected(state)) {
         return selectCastle(state, action);
       } 
       if(nothingSelected(state)) {
@@ -48,6 +48,9 @@ export const actionReduser = (state = initGameMap({x: 10, y: 10}), action) => {
         return selectTile(state, action);
       } else {
         if(turnOfPlayer(state) && unitHaveActionPoints(state)) {
+          if (clickOnCastle(state, action) && attackedUnitInRange(state, action)) {
+            return attackOnCastle(state, action);
+          }
           if(inClickedTileExistUnit(state, action)) {
             if (attackedUnitInRange(state, action)) {
               return attackOnUnit(state, action);
