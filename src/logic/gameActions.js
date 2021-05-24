@@ -1,5 +1,8 @@
+import { clickOnSelectedTile } from "./clickCheck";
+import { createUnit } from "./units";
+
 const selectTile = (state, action) => {
-  return {...state, selectedTileX: action.pos.x, selectedTileY: action.pos.y};
+  return {...state, selectedTileX: action.pos.x, selectedTileY: action.pos.y,};
 }
 
 const unselectTile = (state) => {
@@ -11,7 +14,7 @@ const attackOnUnit = (state, action) => {
   if(state.mapArray[action.pos.x][action.pos.y].unit.hitPoints <= 0) {
     delete state.mapArray[action.pos.x][action.pos.y].unit;
   }
-  state.mapArray[state.selectedTileX][state.selectedTileY].unit.actions -= 1;
+  state.mapArray[state.selectedTileX][state.selectedTileY].unit.actions = 0;
   return {...state};
 }
 
@@ -25,6 +28,9 @@ const moveUnit = (state, action) => {
 
 const endTurn = (state) => {
   let t = state.whoTurn == 0 ? 1 : 0;
+  state.playersGold[state.whoTurn] += 10;
+  state.selectedTileX = -1;
+  state.selectedTileY = -1;
   state.mapArray.forEach((item, index) => {
     item.forEach((itm, ind) => {
       if (typeof itm.unit !== 'undefined') {
@@ -35,4 +41,23 @@ const endTurn = (state) => {
   return {...state, whoTurn: t};
 }
 
-export {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn}
+const buyUnit = (state, unit, action) => {
+  if (createUnit(unit.unitName, unit.holder).cost <= state.playersGold[unit.holder]) {
+    const newUnit = createUnit(unit.unitName, unit.holder);
+    state.playersGold[unit.holder] -= newUnit.cost;
+    state.mapArray[action.pos.x][action.pos.y].unit = newUnit;
+  }
+  delete state.unitInCastle;
+  return {...state};
+}
+
+const selectCastle = (state, action) => {
+  return {...state, showCastle: true, selectedTileX: action.pos.x, selectedTileY: action.pos.y}
+}
+
+const attackOnCastle = (state, action) => {
+  state.mapArray[action.pos.x][action.pos.y].hitPoints -= 30;
+  return {...state};
+}
+
+export {selectTile, unselectTile, attackOnUnit, moveUnit, endTurn, buyUnit, selectCastle, attackOnCastle}
